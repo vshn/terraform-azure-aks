@@ -1,0 +1,143 @@
+variable "virtual_network_name" {
+  description = "The name of the virtual network"
+  type        = string
+}
+
+variable "subnet_name" {
+  description = "The name of the subnet"
+  type        = string
+}
+
+variable "resource_group" {
+  description = "Resource group this virtual network and subnet should belong to"
+  type = object({
+    name     = string
+    location = string
+  })
+}
+
+variable "virtual_network_address_space" {
+  description = "The address space of the virtual network"
+  type        = list(string)
+}
+
+variable "subnet_address_prefixes" {
+  description = "The address prefix of the subnet"
+  type        = list(string)
+}
+
+variable "cluster_name" {
+  type        = string
+  description = "The name of the AKS cluster"
+}
+
+variable "prefix" {
+  type        = string
+  description = "The prefix to use for naming resources in the AKS cluster"
+}
+
+variable "log_analytics_workspace_enabled" {
+  type        = bool
+  description = "Whether or not to enable Log Analytics Workspace for the AKS cluster"
+}
+
+variable "log_analytics_workspace" {
+  type        = any
+  description = "The name of the Log Analytics Workspace to use for the AKS cluster"
+}
+
+variable "log_analytics_solution_id" {
+  type        = string
+  description = "The solution ID for the Log Analytics Workspace"
+}
+
+variable "role_based_access_control_enabled" {
+  type        = bool
+  description = "Whether or not to enable Role-based Access Control for the AKS cluster"
+}
+
+variable "enable_auto_scaling" {
+  type        = bool
+  description = "Whether or not to enable auto-scaling for the AKS cluster's node pool"
+}
+
+variable "node_pool_max_count" {
+  type        = number
+  description = "The maximum number of nodes to allow in the AKS cluster's node pool"
+}
+
+variable "node_pool_min_count" {
+  type        = number
+  description = "The minimum number of nodes to maintain in the AKS cluster's node pool"
+}
+
+variable "node_pool_max_pods" {
+  type        = number
+  description = "The maximum number of pods to allow per node in the AKS cluster's node pool"
+}
+
+variable "node_pool_name" {
+  type        = string
+  description = "The name of the AKS cluster's node pool"
+}
+
+variable "os_disk_size_gb" {
+  type        = number
+  description = "The size of the OS disk for each node in the AKS cluster's node pool, in GB"
+}
+
+variable "node_pool_instance_type" {
+  type        = string
+  description = "The instance type for each node in the AKS cluster's node pool"
+}
+
+variable "aks_network_profile" {
+  type = object({
+    network_plugin     = string,
+    network_policy     = string,
+    dns_service_ip     = string,
+    docker_bridge_cidr = string,
+    service_cidr       = string,
+  })
+  description = "Configurations of AKS network profile"
+}
+
+variable "kubernetes_version" {
+  type        = string
+  description = "The version of Kubernetes to use for the AKS cluster"
+}
+
+variable "orchestrator_version" {
+  type        = string
+  description = "The version of the orchestrator to use for the AKS cluster"
+}
+
+variable "public_access_cidrs" {
+  type        = list(string)
+  description = "List of CIDRs to be authorized to access the AKS cluster's API server"
+}
+
+variable "appgw_enabled" {
+  type        = bool
+  description = "Whether or not to enable an Application Gateway for ingress to the AKS cluster"
+}
+
+variable "appgw_name" {
+  type        = string
+  description = "The name of the Application Gateway for ingress to the AKS cluster"
+}
+
+variable "appgw_subnet_cidr" {
+  type        = string
+  description = "The CIDR of the subnet to use for the Application Gateway for ingress to the AKS cluster"
+}
+
+variable "ARM_CLIENT_ID" {
+  type        = string
+  description = "The client ID to use when authenticating to Azure"
+}
+
+variable "ARM_CLIENT_SECRET" {
+  type        = string
+  description = "The client secret to use when authenticating to Azure"
+}
