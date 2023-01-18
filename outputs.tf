@@ -7,7 +7,7 @@ output "clusternet" {
 }
 
 output "k8s_host" {
-value = module.cluster.host
+  value = module.cluster.host
 }
 
 output "k8s_username" {
