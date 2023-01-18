@@ -39,26 +39,31 @@ variable "prefix" {
 variable "log_analytics_workspace_enabled" {
   type        = bool
   description = "Whether or not to enable Log Analytics Workspace for the AKS cluster"
+  default     = false
 }
 
 variable "log_analytics_workspace" {
   type        = any
   description = "The name of the Log Analytics Workspace to use for the AKS cluster"
+  default     = null
 }
 
 variable "log_analytics_solution_id" {
   type        = string
   description = "The solution ID for the Log Analytics Workspace"
+  default     = null
 }
 
 variable "role_based_access_control_enabled" {
   type        = bool
   description = "Whether or not to enable Role-based Access Control for the AKS cluster"
+  default     = true
 }
 
 variable "enable_auto_scaling" {
   type        = bool
   description = "Whether or not to enable auto-scaling for the AKS cluster's node pool"
+  default     = true
 }
 
 variable "node_pool_max_count" {
@@ -74,6 +79,12 @@ variable "node_pool_min_count" {
 variable "node_pool_max_pods" {
   type        = number
   description = "The maximum number of pods to allow per node in the AKS cluster's node pool"
+}
+
+variable "availability_zones" {
+  type        = list(string)
+  description = "The availability zones to use for the AKS cluster's node pool"
+  default     = null
 }
 
 variable "node_pool_name" {
@@ -120,11 +131,13 @@ variable "public_access_cidrs" {
 variable "appgw_enabled" {
   type        = bool
   description = "Whether or not to enable an Application Gateway for ingress to the AKS cluster"
+  default     = false
 }
 
 variable "appgw_name" {
   type        = string
   description = "The name of the Application Gateway for ingress to the AKS cluster"
+  default     = null
 }
 
 variable "appgw_subnet_cidr" {

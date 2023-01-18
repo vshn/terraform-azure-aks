@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.2.0
+
+- Add `availability_zones` variable
+- Set defaults
+
 ## v1.1.1
 
 - Fix subnet reference in AKS resource

@@ -15,6 +15,7 @@ module "cluster" {
   agents_min_count                  = var.node_pool_min_count
   agents_max_pods                   = var.node_pool_max_pods
   agents_pool_name                  = var.node_pool_name
+  agents_availability_zones         = var.availability_zones
   os_disk_size_gb                   = var.os_disk_size_gb
   agents_size                       = var.node_pool_instance_type
 
