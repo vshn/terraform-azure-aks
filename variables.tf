@@ -143,6 +143,7 @@ variable "appgw_name" {
 variable "appgw_subnet_cidr" {
   type        = string
   description = "The CIDR of the subnet to use for the Application Gateway for ingress to the AKS cluster"
+  default     = null
 }
 
 variable "ARM_CLIENT_ID" {
