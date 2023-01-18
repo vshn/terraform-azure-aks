@@ -24,7 +24,7 @@ module "cluster" {
   net_profile_docker_bridge_cidr = var.aks_network_profile.docker_bridge_cidr
   net_profile_service_cidr       = var.aks_network_profile.service_cidr
 
-  vnet_subnet_id = azurerm_subnet.main.id
+  vnet_subnet_id = azurerm_subnet.subnet.id
 
   kubernetes_version   = var.kubernetes_version
   orchestrator_version = var.orchestrator_version
