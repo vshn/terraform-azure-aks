@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.2.1
+
+- Fix Terraform output for Kubernetes access credentials
+- Fix variable defaults
+
 ## v1.2.0
 
 - Add `availability_zones` variable

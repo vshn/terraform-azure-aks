@@ -45,13 +45,13 @@ variable "log_analytics_workspace_enabled" {
 variable "log_analytics_workspace" {
   type        = any
   description = "The name of the Log Analytics Workspace to use for the AKS cluster"
-  default     = null
+  default     = ""
 }
 
 variable "log_analytics_solution_id" {
   type        = string
   description = "The solution ID for the Log Analytics Workspace"
-  default     = null
+  default     = ""
 }
 
 variable "role_based_access_control_enabled" {
@@ -84,17 +84,19 @@ variable "node_pool_max_pods" {
 variable "availability_zones" {
   type        = list(string)
   description = "The availability zones to use for the AKS cluster's node pool"
-  default     = null
+  default     = []
 }
 
 variable "node_pool_name" {
   type        = string
   description = "The name of the AKS cluster's node pool"
+  default     = "workers"
 }
 
 variable "os_disk_size_gb" {
   type        = number
   description = "The size of the OS disk for each node in the AKS cluster's node pool, in GB"
+  default     = 128
 }
 
 variable "node_pool_instance_type" {
@@ -137,13 +139,13 @@ variable "appgw_enabled" {
 variable "appgw_name" {
   type        = string
   description = "The name of the Application Gateway for ingress to the AKS cluster"
-  default     = null
+  default     = ""
 }
 
 variable "appgw_subnet_cidr" {
   type        = string
   description = "The CIDR of the subnet to use for the Application Gateway for ingress to the AKS cluster"
-  default     = null
+  default     = ""
 }
 
 variable "ARM_CLIENT_ID" {
