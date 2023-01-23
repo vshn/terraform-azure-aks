@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.2.2
+
+- Fix log_analytics_workspace default and type
+
 ## v1.2.1
 
 - Fix Terraform output for Kubernetes access credentials

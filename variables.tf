@@ -43,9 +43,12 @@ variable "log_analytics_workspace_enabled" {
 }
 
 variable "log_analytics_workspace" {
-  type        = any
+  type = object({
+    name = string
+    id   = string
+  })
   description = "The name of the Log Analytics Workspace to use for the AKS cluster"
-  default     = ""
+  default     = { name = "", id = "" }
 }
 
 variable "log_analytics_solution_id" {
