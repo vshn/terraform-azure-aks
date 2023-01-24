@@ -82,6 +82,7 @@ variable "node_pool_min_count" {
 variable "node_pool_max_pods" {
   type        = number
   description = "The maximum number of pods to allow per node in the AKS cluster's node pool"
+  default     = 110
 }
 
 variable "availability_zones" {
@@ -109,11 +110,11 @@ variable "node_pool_instance_type" {
 
 variable "aks_network_profile" {
   type = object({
-    network_plugin     = string,
-    network_policy     = string,
-    dns_service_ip     = string,
-    docker_bridge_cidr = string,
-    service_cidr       = string,
+    network_plugin     = string
+    network_policy     = string
+    dns_service_ip     = string
+    docker_bridge_cidr = string
+    service_cidr       = string
   })
   description = "Configurations of AKS network profile"
 }

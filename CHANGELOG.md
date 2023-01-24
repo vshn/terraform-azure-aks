@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.4.0
+
+- Default node_pool_max_pods to 110
+
 ## v1.3.0
 
 - Fix Terraform output for Kubernetes access credentials
