@@ -166,7 +166,7 @@ variable "ARM_CLIENT_SECRET" {
 variable "automatic_channel_upgrade" {
   type        = string
   description = "The upgrade channel for this Kubernetes Cluster. Possible values are `patch`, `rapid`, `node-image` and `stable`. By default automatic-upgrades are turned off. Note that you cannot use the `patch` upgrade channel and still specify the patch version using `kubernetes_version`. See [the documentation](https://learn.microsoft.com/en-us/azure/aks/auto-upgrade-cluster) for more information"
-  default     = "patch"
+  default     = null
 }
 
 variable "maintenance_window" {
