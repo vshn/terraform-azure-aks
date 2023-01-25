@@ -161,3 +161,32 @@ variable "ARM_CLIENT_SECRET" {
   type        = string
   description = "The client secret to use when authenticating to Azure"
 }
+
+variable "automatic_channel_upgrade" {
+  type        = string
+  description = "he upgrade channel for this Kubernetes Cluster. Possible values are `patch`, `rapid`, `node-image` and `stable`. By default automatic-upgrades are turned off. Note that you cannot use the `patch` upgrade channel and still specify the patch version using `kubernetes_version`. See [the documentation](https://learn.microsoft.com/en-us/azure/aks/auto-upgrade-cluster) for more information"
+  default     = "patch"
+}
+
+variable "maintenance_window" {
+  type = object({
+    allowed = list(object({
+      day   = string
+      hours = set(number)
+    }))
+    not_allowed = list(object({
+      end   = string
+      start = string
+    }))
+  })
+  description = "The maintenance window for the AKS cluster"
+  default = {
+    allowed = [
+      {
+        day   = "Tuesday",
+        hours = [22, 23]
+      }
+    ]
+    not_allowed = []
+  }
+}

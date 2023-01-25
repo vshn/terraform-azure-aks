@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.6.0
+
+- Enable automatic AKS upgrades
+- Configure maintenance window (Tuesday 22, 23pm)
+
 ## v1.5.0
 
 - Update Terraform Azure/aks/azurerm to v6.5.0

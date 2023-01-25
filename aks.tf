@@ -38,4 +38,7 @@ module "cluster" {
 
   client_id     = var.ARM_CLIENT_ID
   client_secret = var.ARM_CLIENT_SECRET
+
+  automatic_channel_upgrade = var.automatic_channel_upgrade
+  maintenance_window        = var.maintenance_window
 }
