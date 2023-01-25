@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.5.0
+
+- Update Terraform Azure/aks/azurerm to v6.5.0
+
 ## v1.4.0
 
 - Default node_pool_max_pods to 110
