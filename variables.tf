@@ -127,6 +127,7 @@ variable "kubernetes_version" {
 variable "orchestrator_version" {
   type        = string
   description = "The version of the orchestrator to use for the AKS cluster"
+  default     = null
 }
 
 variable "public_access_cidrs" {

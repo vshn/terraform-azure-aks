@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.6.1
+
+- Default orchestrator_version to null
+
 ## v1.6.0
 
 - Enable automatic AKS upgrades
