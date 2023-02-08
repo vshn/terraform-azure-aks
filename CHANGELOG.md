@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.6.3
+
+- Make `ARM_CLIENT_ID` and `ARM_CLIENT_SECRET` optional
+
 ## v1.6.2
 
 - Disable automatic AKS upgrades by default

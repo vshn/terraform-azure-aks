@@ -156,11 +156,13 @@ variable "appgw_subnet_cidr" {
 variable "ARM_CLIENT_ID" {
   type        = string
   description = "The client ID to use when authenticating to Azure"
+  default     = ""
 }
 
 variable "ARM_CLIENT_SECRET" {
   type        = string
   description = "The client secret to use when authenticating to Azure"
+  default     = ""
 }
 
 variable "automatic_channel_upgrade" {
