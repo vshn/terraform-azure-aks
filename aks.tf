@@ -42,3 +42,21 @@ module "cluster" {
   automatic_channel_upgrade = var.automatic_channel_upgrade
   maintenance_window        = var.maintenance_window
 }
+
+resource "azurerm_kubernetes_cluster_node_pool" "worker" {
+  for_each              = var.additional_node_pools
+  name                  = each.key
+  kubernetes_cluster_id = module.cluster.aks_id
+
+  vm_size = each.value.worker_instance_type
+
+  orchestrator_version = var.orchestrator_version
+
+  enable_auto_scaling = each.value.enable_auto_scaling
+  min_count           = each.value.worker_min_count
+  max_count           = each.value.worker_max_count
+  max_pods            = each.value.worker_max_pods
+
+  vnet_subnet_id = azurerm_subnet.subnet.id
+  zones          = var.availability_zones
+}

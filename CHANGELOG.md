@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.7.0
+
+- Add support for multiple nodepools
+
 ## v1.6.3
 
 - Make `ARM_CLIENT_ID` and `ARM_CLIENT_SECRET` optional
