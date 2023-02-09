@@ -72,11 +72,13 @@ variable "enable_auto_scaling" {
 variable "node_pool_max_count" {
   type        = number
   description = "The maximum number of nodes to allow in the AKS cluster's node pool"
+  default     = 20
 }
 
 variable "node_pool_min_count" {
   type        = number
   description = "The minimum number of nodes to maintain in the AKS cluster's node pool"
+  default     = 0
 }
 
 variable "node_pool_max_pods" {
@@ -192,4 +194,15 @@ variable "maintenance_window" {
     ]
     not_allowed = []
   }
+}
+
+variable "additional_node_pools" {
+  type = map(object({
+    worker_min_count     = number
+    worker_max_count     = number
+    worker_max_pods      = number
+    worker_instance_type = string
+    enable_auto_scaling  = bool
+  }))
+  default = {}
 }
