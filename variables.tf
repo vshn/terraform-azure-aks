@@ -75,6 +75,11 @@ variable "rbac_aad_managed" {
   default     = false
 }
 
+variable "rbac_aad_admin_group_object_ids" {
+  type        = list(string)
+  description = "Object ID of groups with admin access"
+  default     = []
+}
 variable "enable_auto_scaling" {
   type        = bool
   description = "Whether or not to enable auto-scaling for the AKS cluster's node pool"
