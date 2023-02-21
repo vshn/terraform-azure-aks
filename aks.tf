@@ -1,6 +1,6 @@
 module "cluster" {
   source  = "Azure/aks/azurerm"
-  version = "6.5.0"
+  version = "6.6.0"
 
   cluster_name        = var.cluster_name
   resource_group_name = var.resource_group.name
@@ -10,6 +10,8 @@ module "cluster" {
   log_analytics_workspace           = var.log_analytics_workspace
   log_analytics_solution_id         = var.log_analytics_solution_id
   role_based_access_control_enabled = var.role_based_access_control_enabled
+  rbac_aad                          = var.rbac_aad
+  rbac_aad_managed                  = var.rbac_aad_managed
   enable_auto_scaling               = var.enable_auto_scaling
   agents_max_count                  = var.node_pool_max_count
   agents_min_count                  = var.node_pool_min_count

@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.8.0
+
+- Add support for AzureAD RBAC
+- Update Terraform Azure/aks/azurerm to v6.6.0
+
 ## v1.7.0
 
 - Add support for multiple nodepools

@@ -63,6 +63,18 @@ variable "role_based_access_control_enabled" {
   default     = true
 }
 
+variable "rbac_aad" {
+  type        = bool
+  description = "Is Azure Active Directory ingration enabled?"
+  default     = false
+}
+
+variable "rbac_aad_managed" {
+  type        = bool
+  description = "Is the Azure Active Directory integration Managed, meaning that Azure will create/manage the Service Principal used for integration"
+  default     = false
+}
+
 variable "enable_auto_scaling" {
   type        = bool
   description = "Whether or not to enable auto-scaling for the AKS cluster's node pool"
