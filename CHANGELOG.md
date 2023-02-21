@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.8.1
+
+- Add support for adding AzureAD RBAC Admin Group IDs
+
 ## v1.8.0
 
 - Add support for AzureAD RBAC

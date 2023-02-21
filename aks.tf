@@ -12,6 +12,7 @@ module "cluster" {
   role_based_access_control_enabled = var.role_based_access_control_enabled
   rbac_aad                          = var.rbac_aad
   rbac_aad_managed                  = var.rbac_aad_managed
+  rbac_aad_admin_group_object_ids   = var.rbac_aad_admin_group_object_ids
   enable_auto_scaling               = var.enable_auto_scaling
   agents_max_count                  = var.node_pool_max_count
   agents_min_count                  = var.node_pool_min_count
