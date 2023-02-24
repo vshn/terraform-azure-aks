@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.9.0
+
+- Add support for enabling the OIDC Issuer on a Cluster
+
 ## v1.8.1
 
 - Add support for adding AzureAD RBAC Admin Group IDs

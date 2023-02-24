@@ -80,6 +80,12 @@ variable "rbac_aad_admin_group_object_ids" {
   description = "Object ID of groups with admin access"
   default     = []
 }
+variable "oidc_issuer_enabled" {
+  type        = bool
+  description = "Enable or Disable the OIDC issuer URL. Defaults to false."
+  default     = false
+}
+
 variable "enable_auto_scaling" {
   type        = bool
   description = "Whether or not to enable auto-scaling for the AKS cluster's node pool"
