@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.10.0
+
+- Update Terraform Azure/aks/azurerm to v6.7.0
+
 ## v1.9.0
 
 - Add support for enabling the OIDC Issuer on a Cluster
