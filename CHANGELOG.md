@@ -1,5 +1,12 @@
 # Changelog
 
+## v2.0.0
+
+**WARNING:** This release permanently enables Kubernetes RBAC.
+Clusters created without RBAC enabled **WILL BE RECREATED**!
+
+- Permanently enable Kubernetes RBAC
+
 ## v1.10.0
 
 - Update Terraform Azure/aks/azurerm to v6.7.0

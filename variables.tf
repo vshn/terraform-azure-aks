@@ -57,12 +57,6 @@ variable "log_analytics_solution_id" {
   default     = ""
 }
 
-variable "role_based_access_control_enabled" {
-  type        = bool
-  description = "Whether or not to enable Role-based Access Control for the AKS cluster"
-  default     = true
-}
-
 variable "rbac_aad" {
   type        = bool
   description = "Is Azure Active Directory ingration enabled?"
