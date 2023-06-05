@@ -6,9 +6,11 @@ module "cluster" {
   resource_group_name = var.resource_group.name
   prefix              = var.prefix
 
-  log_analytics_workspace_enabled   = var.log_analytics_workspace_enabled
-  log_analytics_workspace           = var.log_analytics_workspace
-  log_analytics_solution_id         = var.log_analytics_solution_id
+  log_analytics_workspace_enabled = var.log_analytics_workspace_enabled
+  log_analytics_workspace         = var.log_analytics_workspace
+  log_analytics_solution = {
+    id = var.log_analytics_solution_id
+  }
   role_based_access_control_enabled = true
   rbac_aad                          = var.rbac_aad
   rbac_aad_managed                  = var.rbac_aad_managed
@@ -23,10 +25,10 @@ module "cluster" {
   os_disk_size_gb                   = var.os_disk_size_gb
   agents_size                       = var.node_pool_instance_type
 
-  network_plugin                 = var.aks_network_profile.network_plugin
-  network_policy                 = var.aks_network_profile.network_policy
-  net_profile_dns_service_ip     = var.aks_network_profile.dns_service_ip
-  net_profile_service_cidr       = var.aks_network_profile.service_cidr
+  network_plugin             = var.aks_network_profile.network_plugin
+  network_policy             = var.aks_network_profile.network_policy
+  net_profile_dns_service_ip = var.aks_network_profile.dns_service_ip
+  net_profile_service_cidr   = var.aks_network_profile.service_cidr
 
   vnet_subnet_id = azurerm_subnet.subnet.id
 
