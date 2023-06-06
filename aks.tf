@@ -6,11 +6,9 @@ module "cluster" {
   resource_group_name = var.resource_group.name
   prefix              = var.prefix
 
-  log_analytics_workspace_enabled = var.log_analytics_workspace_enabled
-  log_analytics_workspace         = var.log_analytics_workspace
-  log_analytics_solution = {
-    id = var.log_analytics_solution_id
-  }
+  log_analytics_workspace_enabled   = var.log_analytics_workspace_enabled
+  log_analytics_workspace           = var.log_analytics_workspace
+  log_analytics_solution            = var.log_analytics_solution
   role_based_access_control_enabled = true
   rbac_aad                          = var.rbac_aad
   rbac_aad_managed                  = var.rbac_aad_managed
