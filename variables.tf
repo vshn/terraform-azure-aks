@@ -51,10 +51,10 @@ variable "log_analytics_workspace" {
   default     = { name = "", id = "" }
 }
 
-variable "log_analytics_solution_id" {
-  type        = string
+variable "log_analytics_solution" {
+  type        = object({ id = string })
   description = "The solution ID for the Log Analytics Workspace"
-  default     = ""
+  default     = null
 }
 
 variable "rbac_aad" {
