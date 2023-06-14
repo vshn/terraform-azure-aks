@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.3.0
+
+- Allow configuration of `role_based_access_control_enabled`
+**WARNING:** THIS VARIABLE SHOULD ALWAYS BE SET TO `true`!
+THIS IS ONLY PROVIDED FOR BACKWARDS COMPATIBILITY!
+
 ## v2.2.0
 
 - Set default value for `public_access_cidrs` to `["0.0.0.0/0"]`
