@@ -57,6 +57,12 @@ variable "log_analytics_solution" {
   default     = null
 }
 
+variable "role_based_access_control_enabled" {
+  type        = bool
+  description = "THIS VARIABLE SHOULD ALWAYS BE TRUE. IT IS ONLY HERE FOR BACKWARDS COMPATIBILITY."
+  default     = true
+}
+
 variable "rbac_aad" {
   type        = bool
   description = "Is Azure Active Directory ingration enabled?"

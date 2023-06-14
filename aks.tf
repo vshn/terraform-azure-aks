@@ -9,7 +9,7 @@ module "cluster" {
   log_analytics_workspace_enabled   = var.log_analytics_workspace_enabled
   log_analytics_workspace           = var.log_analytics_workspace
   log_analytics_solution            = var.log_analytics_solution
-  role_based_access_control_enabled = true
+  role_based_access_control_enabled = var.role_based_access_control_enabled
   rbac_aad                          = var.rbac_aad
   rbac_aad_managed                  = var.rbac_aad_managed
   rbac_aad_admin_group_object_ids   = var.rbac_aad_admin_group_object_ids
