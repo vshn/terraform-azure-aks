@@ -1,5 +1,13 @@
 # Changelog
 
+## v2.2.0
+
+- Set default value for `public_access_cidrs` to `["0.0.0.0/0"]`
+
+## v2.1.0
+
+- Update Terraform Azure/aks/azurerm to v7.1.0
+
 ## v2.0.0
 
 **WARNING:** This release permanently enables Kubernetes RBAC.

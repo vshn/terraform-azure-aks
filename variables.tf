@@ -152,6 +152,7 @@ variable "orchestrator_version" {
 variable "public_access_cidrs" {
   type        = list(string)
   description = "List of CIDRs to be authorized to access the AKS cluster's API server"
+  default     = ["0.0.0.0/0"]
 }
 
 variable "appgw_enabled" {
