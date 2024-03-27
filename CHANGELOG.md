@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.4.0
+
+- Update terraform azure/aks/azurerm to v8
+- Remove support for ingress_application_gateway
+
 ## v2.3.0
 
 - Allow configuration of `role_based_access_control_enabled`
