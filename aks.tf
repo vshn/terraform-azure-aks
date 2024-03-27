@@ -35,10 +35,6 @@ module "cluster" {
 
   api_server_authorized_ip_ranges = var.public_access_cidrs
 
-  ingress_application_gateway_enabled     = var.appgw_enabled
-  ingress_application_gateway_name        = var.appgw_name
-  ingress_application_gateway_subnet_cidr = var.appgw_subnet_cidr
-
   client_id     = var.ARM_CLIENT_ID
   client_secret = var.ARM_CLIENT_SECRET
 
