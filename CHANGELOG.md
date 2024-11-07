@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.7.0
+- Update terraform azure/aks/azurerm to v9.2.0
+
 ## v2.6.0
 - Set default value for drain timeout for default node pool
 
