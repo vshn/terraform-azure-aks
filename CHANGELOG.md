@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.9.0
+- Update terraform azure/aks/azurerm to v9.4.1
+
 ## v2.8.0
 - Update terraform azure/aks/azurerm to v9.3.0
 
