@@ -1,6 +1,6 @@
 module "cluster" {
   source  = "Azure/aks/azurerm"
-  version = "9.3.0"
+  version = "9.4.1"
 
   cluster_name        = var.cluster_name
   resource_group_name = var.resource_group.name
