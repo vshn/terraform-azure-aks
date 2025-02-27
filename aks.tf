@@ -1,5 +1,5 @@
 module "cluster" {
-  source  = "git::https://github.com/Azure/terraform-azurerm-aks.git//v4?ref=9.4.1"
+  source = "git::https://github.com/Azure/terraform-azurerm-aks.git//v4?ref=9.4.1"
   #version = "9.4.1"
 
   cluster_name        = var.cluster_name
@@ -52,10 +52,10 @@ resource "azurerm_kubernetes_cluster_node_pool" "worker" {
 
   orchestrator_version = var.orchestrator_version
 
-  enable_auto_scaling = each.value.enable_auto_scaling
-  min_count           = each.value.worker_min_count
-  max_count           = each.value.worker_max_count
-  max_pods            = each.value.worker_max_pods
+  auto_scaling_enabled = each.value.auto_scaling_enabled
+  min_count            = each.value.worker_min_count
+  max_count            = each.value.worker_max_count
+  max_pods             = each.value.worker_max_pods
 
   vnet_subnet_id = azurerm_subnet.subnet.id
   zones          = var.availability_zones
