@@ -1,6 +1,6 @@
 module "cluster" {
-  source = "git::https://github.com/Azure/terraform-azurerm-aks.git//v4?ref=9.4.1"
-  #version = "9.4.1"
+  source = "Azure/aks/azurerm//v4"
+  version = "9.4.1"
 
   cluster_name        = var.cluster_name
   resource_group_name = var.resource_group.name
