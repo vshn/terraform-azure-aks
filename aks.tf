@@ -1,5 +1,5 @@
 module "cluster" {
-  source = "Azure/aks/azurerm//v4"
+  source  = "Azure/aks/azurerm//v4"
   version = "9.4.1"
 
   cluster_name        = var.cluster_name
