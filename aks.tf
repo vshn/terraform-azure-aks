@@ -41,6 +41,12 @@ module "cluster" {
 
   automatic_channel_upgrade = var.automatic_channel_upgrade
   maintenance_window        = var.maintenance_window
+
+  lifecycle {
+    ignore_changes = [
+      upgrade_override
+    ]
+  }
 }
 
 resource "azurerm_kubernetes_cluster_node_pool" "worker" {
