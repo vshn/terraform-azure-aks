@@ -226,7 +226,7 @@ variable "additional_node_pools" {
     worker_max_count     = number
     worker_max_pods      = number
     worker_instance_type = string
-    enable_auto_scaling  = bool
+    auto_scaling_enabled = bool
   }))
   default = {}
 }
