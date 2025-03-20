@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.10.0
+- Update aks module reference to one with azurerm provider v4 support 
+
 ## v2.9.0
 - Update terraform azure/aks/azurerm to v9.4.1
 
