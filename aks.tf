@@ -1,6 +1,6 @@
 module "cluster" {
   source  = "Azure/aks/azurerm//v4"
-  version = "9.4.1"
+  version = "10.0.1"
 
   cluster_name        = var.cluster_name
   resource_group_name = var.resource_group.name
@@ -29,7 +29,9 @@ module "cluster" {
   net_profile_dns_service_ip = var.aks_network_profile.dns_service_ip
   net_profile_service_cidr   = var.aks_network_profile.service_cidr
 
-  vnet_subnet_id = azurerm_subnet.subnet.id
+  vnet_subnet = {
+    id = azurerm_subnet.subnet.id
+  }
 
   kubernetes_version   = var.kubernetes_version
   orchestrator_version = var.orchestrator_version
