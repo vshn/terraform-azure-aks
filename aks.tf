@@ -4,6 +4,7 @@ module "cluster" {
 
   cluster_name        = var.cluster_name
   resource_group_name = var.resource_group.name
+  location            = var.resource_group.location
   prefix              = var.prefix
 
   log_analytics_workspace_enabled      = var.log_analytics_workspace_enabled
