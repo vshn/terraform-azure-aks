@@ -69,12 +69,6 @@ variable "rbac_aad" {
   default     = false
 }
 
-variable "rbac_aad_managed" {
-  type        = bool
-  description = "Is the Azure Active Directory integration Managed, meaning that Azure will create/manage the Service Principal used for integration"
-  default     = false
-}
-
 variable "rbac_aad_admin_group_object_ids" {
   type        = list(string)
   description = "Object ID of groups with admin access"

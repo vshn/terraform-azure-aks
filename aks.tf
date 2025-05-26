@@ -12,7 +12,6 @@ module "cluster" {
   log_analytics_solution               = var.log_analytics_solution
   role_based_access_control_enabled    = var.role_based_access_control_enabled
   rbac_aad                             = var.rbac_aad
-  rbac_aad_managed                     = var.rbac_aad_managed
   rbac_aad_admin_group_object_ids      = var.rbac_aad_admin_group_object_ids
   oidc_issuer_enabled                  = var.oidc_issuer_enabled
   enable_auto_scaling                  = var.enable_auto_scaling
