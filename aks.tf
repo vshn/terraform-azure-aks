@@ -1,9 +1,10 @@
 module "cluster" {
   source  = "Azure/aks/azurerm//v4"
-  version = "9.4.1"
+  version = "10.0.1"
 
   cluster_name        = var.cluster_name
   resource_group_name = var.resource_group.name
+  location            = var.resource_group.location
   prefix              = var.prefix
 
   log_analytics_workspace_enabled      = var.log_analytics_workspace_enabled
@@ -11,7 +12,6 @@ module "cluster" {
   log_analytics_solution               = var.log_analytics_solution
   role_based_access_control_enabled    = var.role_based_access_control_enabled
   rbac_aad                             = var.rbac_aad
-  rbac_aad_managed                     = var.rbac_aad_managed
   rbac_aad_admin_group_object_ids      = var.rbac_aad_admin_group_object_ids
   oidc_issuer_enabled                  = var.oidc_issuer_enabled
   enable_auto_scaling                  = var.enable_auto_scaling
@@ -29,7 +29,9 @@ module "cluster" {
   net_profile_dns_service_ip = var.aks_network_profile.dns_service_ip
   net_profile_service_cidr   = var.aks_network_profile.service_cidr
 
-  vnet_subnet_id = azurerm_subnet.subnet.id
+  vnet_subnet = {
+    id = azurerm_subnet.subnet.id
+  }
 
   kubernetes_version   = var.kubernetes_version
   orchestrator_version = var.orchestrator_version
