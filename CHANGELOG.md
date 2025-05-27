@@ -1,5 +1,11 @@
 # Changelog
 
+## v2.11.0
+- Update terraform azure/aks/azurerm to v10.0.1
+- Remove support for rbac_aad_managed 
+- Convert vnet_subnet_id to an object
+- Add required variable location
+
 ## v2.10.0
 - Update aks module reference to one with azurerm provider v4 support 
 
