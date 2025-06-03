@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.12.0
+- Update terraform azure/aks/azurerm to v10.1.0
+
 ## v2.11.0
 - Update terraform azure/aks/azurerm to v10.0.1
 - Remove support for rbac_aad_managed 
