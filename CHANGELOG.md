@@ -1,5 +1,9 @@
 # Changelog
 
+## v2.13.0
+- Update terraform azure/aks/azurerm to v10.1.1
+- Fix issue where plugin crashes #ACK-291
+
 ## v2.12.0
 - Update terraform azure/aks/azurerm to v10.1.0
 
