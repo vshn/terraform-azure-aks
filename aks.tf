@@ -1,3 +1,5 @@
+data "azurerm_client_config" "current" {}
+
 module "cluster" {
   source  = "Azure/aks/azurerm//v4"
   version = "10.1.0"
@@ -13,6 +15,7 @@ module "cluster" {
   role_based_access_control_enabled    = var.role_based_access_control_enabled
   rbac_aad                             = var.rbac_aad
   rbac_aad_admin_group_object_ids      = var.rbac_aad_admin_group_object_ids
+  rbac_aad_tenant_id                   = data.azurerm_client_config.current.tenant_id
   oidc_issuer_enabled                  = var.oidc_issuer_enabled
   enable_auto_scaling                  = var.enable_auto_scaling
   agents_max_count                     = var.node_pool_max_count
