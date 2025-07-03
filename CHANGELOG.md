@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.14.0
+- Make upgrade_override configurable
+
 ## v2.13.0
 - Update terraform azure/aks/azurerm to v10.1.1
 - Fix issue where plugin crashes #ACK-291
