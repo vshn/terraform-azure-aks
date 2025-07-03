@@ -224,3 +224,12 @@ variable "additional_node_pools" {
   }))
   default = {}
 }
+
+variable "upgrade_override" {
+  description = "Override settings for upgrades"
+  type = object({
+    force_upgrade_enabled = bool
+    effective_until       = optional(string)
+  })
+  default = null
+}
