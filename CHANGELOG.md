@@ -1,5 +1,8 @@
 # Changelog
 
+## v2.15.0
+- Update terraform azure/aks/azurerm to v10.2.0
+
 ## v2.14.0
 - Make upgrade_override configurable
 
