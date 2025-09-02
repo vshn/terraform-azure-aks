@@ -2,7 +2,7 @@ data "azurerm_client_config" "current" {}
 
 module "cluster" {
   source  = "Azure/aks/azurerm//v4"
-  version = "10.2.0"
+  version = "11.0.0"
 
   cluster_name        = var.cluster_name
   resource_group_name = var.resource_group.name
