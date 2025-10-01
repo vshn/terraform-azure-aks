@@ -233,3 +233,9 @@ variable "upgrade_override" {
   })
   default = null
 }
+
+variable "workload_identity_enabled" {
+  description = "Enable or Disable Workload Identity"
+  type        = bool
+  default     = false
+}
