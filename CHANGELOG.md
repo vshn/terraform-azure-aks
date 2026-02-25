@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.1.0
+- Update terraform azure/aks/azurerm to v11.1.0
+
 ## v3.0.1
 - Add support to enable workload identity
 
