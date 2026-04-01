@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.4.0
+- Add support for Web App Routing
+
 ## v3.3.0
 - Update terraform azure/aks/azurerm to v11.4.0
 

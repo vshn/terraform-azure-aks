@@ -26,6 +26,7 @@ module "cluster" {
   agents_size                          = var.node_pool_instance_type
   agents_pool_drain_timeout_in_minutes = 30
   workload_identity_enabled            = var.workload_identity_enabled
+  web_app_routing                      = var.web_app_routing
 
   network_plugin             = var.aks_network_profile.network_plugin
   network_policy             = var.aks_network_profile.network_policy

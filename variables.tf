@@ -239,3 +239,11 @@ variable "workload_identity_enabled" {
   type        = bool
   default     = false
 }
+
+variable "web_app_routing" {
+  description = "Enable or Disable webapp routing"
+  type = object({
+    dns_zone_ids = list(string)
+  })
+  default = null
+}
