@@ -9,3 +9,8 @@ output "clusternet" {
 output "kubeconfig" {
   value = module.cluster.kube_config_raw
 }
+
+output "kubelet_identity" {
+  description = "The kubelet managed identity of the AKS cluster."
+  value       = module.cluster.kubelet_identity
+}
