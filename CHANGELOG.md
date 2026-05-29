@@ -1,5 +1,8 @@
 # Changelog
 
+## v3.7.1
+- Add output for `kubelet_identity`
+
 ## v3.7.0
 - Update terraform azure/aks/azurerm to v11.7.0
 
