@@ -244,3 +244,8 @@ variable "ingress_profile" {
   })
   default = null
 }
+
+variable "dns_prefix" {
+  description = "The DNS prefix of the Managed Cluster"
+  type = string
+}

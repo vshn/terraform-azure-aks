@@ -10,6 +10,7 @@ module "cluster" {
   enable_rbac              = var.role_based_access_control_enabled
   ingress_profile          = var.ingress_profile
   kubernetes_version       = var.kubernetes_version
+  dns_prefix               = var.dns_prefix
   maintenanceconfiguration = var.maintenance_window
   upgrade_settings         = var.upgrade_settings
 
