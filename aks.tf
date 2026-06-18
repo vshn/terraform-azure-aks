@@ -67,6 +67,10 @@ module "cluster" {
     upgrade_channel = var.automatic_channel_upgrade
   }
 
+managed_identities = {
+  system_assigned = true
+}
+
   network_profile = {
     network_plugin = var.aks_network_profile.network_plugin
     network_policy = var.aks_network_profile.network_policy
@@ -74,19 +78,13 @@ module "cluster" {
     service_cidr   = var.aks_network_profile.service_cidr
   }
 
-  oidc_issuer_profile = {
-    enabled = var.role_based_access_control_enabled
-
-  }
+oidc_issuer_profile = {
+  enabled = var.oidc_issuer_enabled
+}
 
   security_profile = {
     workload_identity = {
       enabled = var.workload_identity_enabled
     }
-  }
-
-  service_principal_profile = {
-    client_id = var.ARM_CLIENT_ID
-    secret    = var.ARM_CLIENT_SECRET
   }
 }
