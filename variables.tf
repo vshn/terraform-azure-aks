@@ -63,6 +63,13 @@ variable "rbac_aad_admin_group_object_ids" {
   description = "Object ID of groups with admin access"
   default     = []
 }
+
+variable "rbac_aad_managed" {
+  type        = bool
+  description = "Whether to use managed AAD integration."
+  default     = true
+}
+
 variable "oidc_issuer_enabled" {
   type        = bool
   description = "Enable or Disable the OIDC issuer URL. Defaults to false."
@@ -247,5 +254,5 @@ variable "ingress_profile" {
 
 variable "dns_prefix" {
   description = "The DNS prefix of the Managed Cluster"
-  type = string
+  type        = string
 }

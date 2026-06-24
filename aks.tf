@@ -2,7 +2,7 @@ data "azurerm_client_config" "current" {}
 
 module "cluster" {
   source  = "Azure/avm-res-containerservice-managedcluster/azurerm"
-  version = "0.6.1"
+  version = "0.6.6"
 
   name                     = var.cluster_name
   parent_id                = local.resource_group_id
@@ -17,14 +17,15 @@ module "cluster" {
   aad_profile = {
     admin_group_object_ids = var.rbac_aad_admin_group_object_ids
     tenant_id              = data.azurerm_client_config.current.tenant_id
+    managed                = var.rbac_aad_managed
   }
 
-  addon_profile_oms_agent = {
-    enabled = var.log_analytics_workspace_enabled
+  addon_profile_oms_agent = var.log_analytics_workspace_enabled ? {
+    enabled = true
     config = {
       log_analytics_workspace_resource_id = var.log_analytics_workspace.id
     }
-  }
+  } : null
 
   default_agent_pool = {
     name                 = var.node_pool_name
@@ -67,9 +68,9 @@ module "cluster" {
     upgrade_channel = var.automatic_channel_upgrade
   }
 
-managed_identities = {
-  system_assigned = true
-}
+  managed_identities = {
+    system_assigned = true
+  }
 
   network_profile = {
     network_plugin = var.aks_network_profile.network_plugin
@@ -78,9 +79,9 @@ managed_identities = {
     service_cidr   = var.aks_network_profile.service_cidr
   }
 
-oidc_issuer_profile = {
-  enabled = var.oidc_issuer_enabled
-}
+  oidc_issuer_profile = {
+    enabled = var.oidc_issuer_enabled
+  }
 
   security_profile = {
     workload_identity = {
