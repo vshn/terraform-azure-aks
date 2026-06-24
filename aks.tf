@@ -88,4 +88,8 @@ module "cluster" {
       enabled = var.workload_identity_enabled
     }
   }
+
+  lock = var.lock_kind == null ? null : {
+    kind = var.lock_kind
+  }
 }

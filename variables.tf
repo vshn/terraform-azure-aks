@@ -70,6 +70,12 @@ variable "rbac_aad_managed" {
   default     = true
 }
 
+variable "lock_kind" {
+  type        = string
+  description = "The kind of management lock to apply to the AKS cluster. Set to null to disable."
+  default     = "CanNotDelete"
+}
+
 variable "oidc_issuer_enabled" {
   type        = bool
   description = "Enable or Disable the OIDC issuer URL. Defaults to false."
