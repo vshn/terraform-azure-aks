@@ -31,11 +31,6 @@ variable "cluster_name" {
   description = "The name of the AKS cluster"
 }
 
-variable "prefix" {
-  type        = string
-  description = "The prefix to use for naming resources in the AKS cluster"
-}
-
 variable "log_analytics_workspace_enabled" {
   type        = bool
   description = "Whether or not to enable Log Analytics Workspace for the AKS cluster"
@@ -49,12 +44,6 @@ variable "log_analytics_workspace" {
   })
   description = "The name of the Log Analytics Workspace to use for the AKS cluster"
   default     = { name = "", id = "" }
-}
-
-variable "log_analytics_solution" {
-  type        = object({ id = string })
-  description = "The solution ID for the Log Analytics Workspace"
-  default     = null
 }
 
 variable "role_based_access_control_enabled" {
@@ -74,6 +63,19 @@ variable "rbac_aad_admin_group_object_ids" {
   description = "Object ID of groups with admin access"
   default     = []
 }
+
+variable "rbac_aad_managed" {
+  type        = bool
+  description = "Whether to use managed AAD integration."
+  default     = true
+}
+
+variable "lock_kind" {
+  type        = string
+  description = "The kind of management lock to apply to the AKS cluster. Set to null to disable."
+  default     = "CanNotDelete"
+}
+
 variable "oidc_issuer_enabled" {
   type        = bool
   description = "Enable or Disable the OIDC issuer URL. Defaults to false."
@@ -192,25 +194,28 @@ variable "automatic_channel_upgrade" {
 }
 
 variable "maintenance_window" {
-  type = object({
-    allowed = list(object({
-      day   = string
-      hours = set(number)
-    }))
-    not_allowed = list(object({
-      end   = string
-      start = string
-    }))
-  })
-  description = "The maintenance window for the AKS cluster"
+  type = map(object({
+    name = string
+    time_in_week = optional(list(object({
+      day        = optional(string)
+      hour_slots = optional(list(number))
+    })))
+    not_allowed_time = optional(list(object({
+      end   = optional(string)
+      start = optional(string)
+    })))
+  }))
   default = {
-    allowed = [
-      {
-        day   = "Tuesday",
-        hours = [22, 23]
-      }
-    ]
-    not_allowed = []
+    default = {
+      name = "default"
+      time_in_week = [
+        {
+          day        = "Tuesday"
+          hour_slots = [22, 23]
+        }
+      ]
+      not_allowed_time = []
+    }
   }
 }
 
@@ -225,11 +230,13 @@ variable "additional_node_pools" {
   default = {}
 }
 
-variable "upgrade_override" {
+variable "upgrade_settings" {
   description = "Override settings for upgrades"
   type = object({
-    force_upgrade_enabled = bool
-    effective_until       = optional(string)
+    override_settings = optional(object({
+      force_upgrade = optional(bool)
+      until         = optional(string)
+    }))
   })
   default = null
 }
@@ -240,10 +247,18 @@ variable "workload_identity_enabled" {
   default     = false
 }
 
-variable "web_app_routing" {
-  description = "Enable or Disable webapp routing"
+variable "ingress_profile" {
+  description = "Ingress profile for the AKS cluster"
   type = object({
-    dns_zone_ids = list(string)
+    web_app_routing = optional(object({
+      enabled               = optional(bool)
+      dns_zone_resource_ids = optional(list(string))
+    }))
   })
   default = null
+}
+
+variable "dns_prefix" {
+  description = "The DNS prefix of the Managed Cluster"
+  type        = string
 }

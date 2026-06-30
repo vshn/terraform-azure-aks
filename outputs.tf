@@ -7,7 +7,7 @@ output "clusternet" {
 }
 
 output "kubeconfig" {
-  value = module.cluster.kube_config_raw
+  value = module.cluster.kube_config
 }
 
 output "kubelet_identity" {

@@ -1,70 +1,95 @@
 data "azurerm_client_config" "current" {}
 
 module "cluster" {
-  source  = "Azure/aks/azurerm"
-  version = "11.7.0"
+  source  = "Azure/avm-res-containerservice-managedcluster/azurerm"
+  version = "0.6.6"
 
-  cluster_name        = var.cluster_name
-  resource_group_name = var.resource_group.name
-  location            = var.resource_group.location
-  prefix              = var.prefix
+  name                     = var.cluster_name
+  parent_id                = local.resource_group_id
+  location                 = var.resource_group.location
+  enable_rbac              = var.role_based_access_control_enabled
+  ingress_profile          = var.ingress_profile
+  kubernetes_version       = var.kubernetes_version
+  dns_prefix               = var.dns_prefix
+  maintenanceconfiguration = var.maintenance_window
+  upgrade_settings         = var.upgrade_settings
 
-  log_analytics_workspace_enabled      = var.log_analytics_workspace_enabled
-  log_analytics_workspace              = var.log_analytics_workspace
-  log_analytics_solution               = var.log_analytics_solution
-  role_based_access_control_enabled    = var.role_based_access_control_enabled
-  rbac_aad_admin_group_object_ids      = var.rbac_aad_admin_group_object_ids
-  rbac_aad_tenant_id                   = data.azurerm_client_config.current.tenant_id
-  oidc_issuer_enabled                  = var.oidc_issuer_enabled
-  auto_scaling_enabled                 = var.enable_auto_scaling
-  agents_max_count                     = var.node_pool_max_count
-  agents_min_count                     = var.node_pool_min_count
-  agents_max_pods                      = var.node_pool_max_pods
-  agents_pool_name                     = var.node_pool_name
-  agents_availability_zones            = var.availability_zones
-  os_disk_size_gb                      = var.os_disk_size_gb
-  agents_size                          = var.node_pool_instance_type
-  agents_pool_drain_timeout_in_minutes = 30
-  workload_identity_enabled            = var.workload_identity_enabled
-  web_app_routing                      = var.web_app_routing
-
-  network_plugin             = var.aks_network_profile.network_plugin
-  network_policy             = var.aks_network_profile.network_policy
-  net_profile_dns_service_ip = var.aks_network_profile.dns_service_ip
-  net_profile_service_cidr   = var.aks_network_profile.service_cidr
-
-  vnet_subnet = {
-    id = azurerm_subnet.subnet.id
+  aad_profile = {
+    admin_group_object_ids = var.rbac_aad_admin_group_object_ids
+    tenant_id              = data.azurerm_client_config.current.tenant_id
+    managed                = var.rbac_aad_managed
   }
 
-  kubernetes_version   = var.kubernetes_version
-  orchestrator_version = var.orchestrator_version
+  addon_profile_oms_agent = var.log_analytics_workspace_enabled ? {
+    enabled = true
+    config = {
+      log_analytics_workspace_resource_id = var.log_analytics_workspace.id
+    }
+  } : null
 
-  api_server_authorized_ip_ranges = var.public_access_cidrs
+  default_agent_pool = {
+    name                 = var.node_pool_name
+    vm_size              = var.node_pool_instance_type
+    enable_auto_scaling  = var.enable_auto_scaling
+    min_count            = var.node_pool_min_count
+    max_count            = var.node_pool_max_count
+    max_pods             = var.node_pool_max_pods
+    availability_zones   = var.availability_zones
+    orchestrator_version = var.orchestrator_version
+    os_disk_size_gb      = var.os_disk_size_gb
+    vnet_subnet_id       = azurerm_subnet.subnet.id
+    upgrade_settings = {
+      drain_timeout_in_minutes = 30
+    }
+  }
 
-  client_id     = var.ARM_CLIENT_ID
-  client_secret = var.ARM_CLIENT_SECRET
+  agent_pools = {
+    for name, pool in var.additional_node_pools : name => {
+      name                 = name
+      vm_size              = pool.worker_instance_type
+      enable_auto_scaling  = pool.auto_scaling_enabled
+      min_count            = pool.worker_min_count
+      max_count            = pool.worker_max_count
+      max_pods             = pool.worker_max_pods
+      vnet_subnet_id       = azurerm_subnet.subnet.id
+      availability_zones   = var.availability_zones
+      orchestrator_version = var.orchestrator_version
+      upgrade_settings = {
+        drain_timeout_in_minutes = 30
+      }
+    }
+  }
 
-  automatic_channel_upgrade = var.automatic_channel_upgrade
-  maintenance_window        = var.maintenance_window
+  api_server_access_profile = {
+    authorized_ip_ranges = var.public_access_cidrs
+  }
 
-  upgrade_override = var.upgrade_override
-}
+  auto_upgrade_profile = {
+    upgrade_channel = var.automatic_channel_upgrade
+  }
 
-resource "azurerm_kubernetes_cluster_node_pool" "worker" {
-  for_each              = var.additional_node_pools
-  name                  = each.key
-  kubernetes_cluster_id = module.cluster.aks_id
+  managed_identities = {
+    system_assigned = true
+  }
 
-  vm_size = each.value.worker_instance_type
+  network_profile = {
+    network_plugin = var.aks_network_profile.network_plugin
+    network_policy = var.aks_network_profile.network_policy
+    dns_service_ip = var.aks_network_profile.dns_service_ip
+    service_cidr   = var.aks_network_profile.service_cidr
+  }
 
-  orchestrator_version = var.orchestrator_version
+  oidc_issuer_profile = {
+    enabled = var.oidc_issuer_enabled
+  }
 
-  auto_scaling_enabled = each.value.auto_scaling_enabled
-  min_count            = each.value.worker_min_count
-  max_count            = each.value.worker_max_count
-  max_pods             = each.value.worker_max_pods
+  security_profile = {
+    workload_identity = {
+      enabled = var.workload_identity_enabled
+    }
+  }
 
-  vnet_subnet_id = azurerm_subnet.subnet.id
-  zones          = var.availability_zones
+  lock = var.lock_kind == null ? null : {
+    kind = var.lock_kind
+  }
 }
