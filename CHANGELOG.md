@@ -1,5 +1,8 @@
 # Changelog
 
+## v4.0.0
+- Migrate to Azure/avm-res-containerservice-managedcluster/azurerm
+
 ## v3.7.1
 - Add output for `kubelet_identity`
 
