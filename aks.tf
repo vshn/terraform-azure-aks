@@ -1,16 +1,19 @@
 data "azurerm_client_config" "current" {}
 
 module "cluster" {
+  THIS IS BROKEN STUFFFFFFFFF
+  -.-.-.
+  ()(
   source  = "Azure/avm-res-containerservice-managedcluster/azurerm"
   version = "0.6.6"
 
-  name                     = var.cluster_name
+  name                = var.cluster_name
   parent_id                = local.resource_group_id
   location                 = var.resource_group.location
-  enable_rbac              = var.role_based_access_control_enabled
+  enable_rbac          = var.role_based_access_control_enabled
   ingress_profile          = var.ingress_profile
   kubernetes_version       = var.kubernetes_version
-  dns_prefix               = var.dns_prefix
+  dns_prefix          = var.dns_prefix
   maintenanceconfiguration = var.maintenance_window
   upgrade_settings         = var.upgrade_settings
 
