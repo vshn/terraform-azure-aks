@@ -3,7 +3,7 @@ name: Terraform CI
 on:
   pull_request:
   push:
-    branches: [main]
+    branches: [test-linter]
   workflow_dispatch:
 
 jobs:
