@@ -1,5 +1,8 @@
 # Changelog
 
+## v4.1.0
+- Update Azure/avm-res-containerservice-managedcluster to v0.7.3
+
 ## v4.0.0
 - Migrate to Azure/avm-res-containerservice-managedcluster/azurerm
 
