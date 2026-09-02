@@ -2,7 +2,7 @@ data "azurerm_client_config" "current" {}
 
 module "cluster" {
   source  = "Azure/avm-res-containerservice-managedcluster/azurerm"
-  version = "0.7.3"
+  version = "0.8.3"
 
   name                     = var.cluster_name
   parent_id                = local.resource_group_id
