@@ -1,0 +1,17 @@
+{
+  "template": "https://github.com/vshn/terraform-module-template",
+  "commit": "0f4ceb2fea288302bda654f7a0a63a611a65d248",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "project_slug": "terraform-azure-aks",
+      "description": "VSHN Terraform Module Azure AKS",
+      "_copy_without_render": [
+        ".github/workflows/*"
+      ],
+      "_template": "https://github.com/vshn/terraform-module-template",
+      "_commit": "0f4ceb2fea288302bda654f7a0a63a611a65d248"
+    }
+  },
+  "directory": null
+}
