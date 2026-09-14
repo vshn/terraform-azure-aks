@@ -3,11 +3,11 @@
   "extends": ["config:recommended"],
   "addLabels": ["vega-renovate-ops", "dependencies"],
   "reviewers": ["team:vega"],
+  "github-actions": { "enabled": false },
   "packageRules": [
-    {
-      "matchUpdateTypes": ["patch"],
-      "automerge": true
-    }
+    { "matchUpdateTypes": ["patch"], "automerge": true, "addLabels": ["bump:patch"] },
+    { "matchUpdateTypes": ["minor"], "addLabels": ["bump:minor"] },
+    { "matchUpdateTypes": ["major"], "addLabels": ["bump:major"] }
   ],
   "platformAutomerge": true
 }
