@@ -1,3 +1,4 @@
+# Managed by terraform-module-template
 name: Terraform CI
 
 on:
