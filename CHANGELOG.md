@@ -1,7 +1,7 @@
 # Changelog
 
 ## v4.2.0
-- Deprecate `README.md`. Changes will be tracked in Github release notes from now on.
+- Deprecate `CHANGELOG.md`. Changes will be tracked in Github release notes from now on.
 
 ## v4.1.0
 - Update Azure/avm-res-containerservice-managedcluster to v0.7.3
