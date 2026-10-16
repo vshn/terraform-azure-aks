@@ -193,9 +193,44 @@ variable "automatic_channel_upgrade" {
   default     = null
 }
 
+variable "node_os_upgrade_channel" {
+  type        = string
+  description = "The node OS upgrade channel for this Kubernetes Cluster. Possible values are `NodeImage`, `SecurityPatch`, `Unmanaged` and `None`. Upgrades run in the `aksManagedNodeOSUpgradeSchedule` maintenance window. See [the documentation](https://learn.microsoft.com/en-us/azure/aks/auto-upgrade-node-os-image) for more information"
+  default     = "NodeImage"
+}
+
 variable "maintenance_window" {
+  description = "Planned maintenance windows for the AKS cluster. Defaults to Tuesday 22:00-02:00 UTC for `default`, `aksManagedAutoUpgradeSchedule` and `aksManagedNodeOSUpgradeSchedule`. See [the documentation](https://learn.microsoft.com/en-us/azure/aks/planned-maintenance) for more information"
   type = map(object({
     name = string
+    maintenance_window = optional(object({
+      duration_hours = number
+      start_time     = string
+      start_date     = optional(string)
+      utc_offset     = optional(string)
+      not_allowed_dates = optional(list(object({
+        end   = string
+        start = string
+      })))
+      schedule = object({
+        daily = optional(object({
+          interval_days = number
+        }))
+        weekly = optional(object({
+          day_of_week    = string
+          interval_weeks = number
+        }))
+        absolute_monthly = optional(object({
+          day_of_month    = number
+          interval_months = number
+        }))
+        relative_monthly = optional(object({
+          day_of_week     = string
+          interval_months = number
+          week_index      = string
+        }))
+      })
+    }))
     time_in_week = optional(list(object({
       day        = optional(string)
       hour_slots = optional(list(number))
@@ -208,13 +243,45 @@ variable "maintenance_window" {
   default = {
     default = {
       name = "default"
-      time_in_week = [
-        {
-          day        = "Tuesday"
-          hour_slots = [22, 23]
+      maintenance_window = {
+        duration_hours = 4
+        start_time     = "22:00"
+        utc_offset     = "+00:00"
+        schedule = {
+          weekly = {
+            day_of_week    = "Tuesday"
+            interval_weeks = 1
+          }
         }
-      ]
-      not_allowed_time = []
+      }
+    }
+    aksManagedAutoUpgradeSchedule = {
+      name = "aksManagedAutoUpgradeSchedule"
+      maintenance_window = {
+        duration_hours = 4
+        start_time     = "22:00"
+        utc_offset     = "+00:00"
+        schedule = {
+          weekly = {
+            day_of_week    = "Tuesday"
+            interval_weeks = 1
+          }
+        }
+      }
+    }
+    aksManagedNodeOSUpgradeSchedule = {
+      name = "aksManagedNodeOSUpgradeSchedule"
+      maintenance_window = {
+        duration_hours = 4
+        start_time     = "22:00"
+        utc_offset     = "+00:00"
+        schedule = {
+          weekly = {
+            day_of_week    = "Tuesday"
+            interval_weeks = 1
+          }
+        }
+      }
     }
   }
 }
