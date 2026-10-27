@@ -13,6 +13,7 @@ module "cluster" {
   dns_prefix               = var.dns_prefix
   maintenanceconfiguration = var.maintenance_window
   upgrade_settings         = var.upgrade_settings
+  enable_telemetry         = var.enable_telemetry
 
   aad_profile = {
     admin_group_object_ids = var.rbac_aad_admin_group_object_ids

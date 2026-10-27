@@ -262,3 +262,9 @@ variable "dns_prefix" {
   description = "The DNS prefix of the Managed Cluster"
   type        = string
 }
+
+variable "enable_telemetry" {
+  description = "Enable AVM telemetry of the upstream module. Requires the azapi provider to have a subscription configured and permission to create deployments at subscription scope."
+  type        = bool
+  default     = false
+}
