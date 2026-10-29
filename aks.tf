@@ -66,7 +66,8 @@ module "cluster" {
   }
 
   auto_upgrade_profile = {
-    upgrade_channel = var.automatic_channel_upgrade
+    upgrade_channel         = var.automatic_channel_upgrade
+    node_os_upgrade_channel = var.node_os_upgrade_channel
   }
 
   managed_identities = {
