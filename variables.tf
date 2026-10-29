@@ -246,6 +246,7 @@ variable "maintenance_window" {
       maintenance_window = {
         duration_hours = 4
         start_time     = "22:00"
+        start_date     = "2026-10-01"
         utc_offset     = "+01:00"
         schedule = {
           weekly = {
@@ -260,6 +261,7 @@ variable "maintenance_window" {
       maintenance_window = {
         duration_hours = 4
         start_time     = "22:00"
+        start_date     = "2026-10-01"
         utc_offset     = "+00:00"
         schedule = {
           weekly = {
@@ -274,6 +276,7 @@ variable "maintenance_window" {
       maintenance_window = {
         duration_hours = 4
         start_time     = "22:00"
+        start_date     = "2026-10-01"
         utc_offset     = "+01:00"
         schedule = {
           weekly = {
