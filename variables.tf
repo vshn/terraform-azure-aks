@@ -338,3 +338,45 @@ variable "enable_telemetry" {
   type        = bool
   default     = false
 }
+
+variable "application_load_balancer_enabled" {
+  description = "Enable the Application Gateway for Containers ALB Controller add-on"
+  type        = bool
+  default     = false
+  nullable    = false
+
+  validation {
+    condition     = !var.application_load_balancer_enabled || (var.oidc_issuer_enabled && var.workload_identity_enabled)
+    error_message = "application_load_balancer_enabled requires oidc_issuer_enabled and workload_identity_enabled to be true."
+  }
+
+  validation {
+    condition     = !var.application_load_balancer_enabled || var.aks_network_profile.network_plugin == "azure"
+    error_message = "application_load_balancer_enabled requires the azure network plugin (Azure CNI or Azure CNI Overlay)."
+  }
+}
+
+variable "alb_subnet_name" {
+  description = "Name of the subnet delegated to Application Gateway for Containers"
+  type        = string
+  default     = "alb"
+}
+
+variable "alb_subnet_address_prefixes" {
+  description = "Address prefixes of the subnet delegated to Application Gateway for Containers. Each `ApplicationLoadBalancer` needs 256 addresses, e.g. use a /22 for up to four. Required when `application_load_balancer_enabled` is true"
+  type        = list(string)
+  default     = []
+  nullable    = false
+
+  validation {
+    condition     = !var.application_load_balancer_enabled || length(var.alb_subnet_address_prefixes) > 0
+    error_message = "alb_subnet_address_prefixes must be set when application_load_balancer_enabled is true."
+  }
+
+  validation {
+    condition = alltrue([
+      for prefix in var.alb_subnet_address_prefixes : tonumber(split("/", prefix)[1]) <= 24
+    ])
+    error_message = "alb_subnet_address_prefixes must be /24 or larger."
+  }
+}
