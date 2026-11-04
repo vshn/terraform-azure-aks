@@ -96,9 +96,9 @@ module "cluster" {
   }
 }
 
-# Subnet for Application Gateway for Containers in managed deployment mode: the ALB Controller
-# add-on creates the AGC resources in the node resource group from `ApplicationLoadBalancer`
-# custom resources and associates them with this subnet.
+# Application Gateway for Containers (AGC). The ALB Controller add-on is enabled via local.ingress_profile.
+# The default AGC and its frontend are managed here, so its FQDN survives removal of Gateway resources.
+# Further AGCs can be created in managed mode via `ApplicationLoadBalancer` resources using the same subnet.
 
 resource "azurerm_subnet" "alb" {
   count = var.application_load_balancer_enabled ? 1 : 0
@@ -118,7 +118,39 @@ resource "azurerm_subnet" "alb" {
   }
 }
 
+resource "azurerm_application_load_balancer" "default" {
+  count = var.application_load_balancer_enabled ? 1 : 0
+
+  name                = "${var.cluster_name}-alb"
+  resource_group_name = var.resource_group.name
+  location            = var.resource_group.location
+}
+
+resource "azurerm_application_load_balancer_frontend" "default" {
+  count = var.application_load_balancer_enabled ? 1 : 0
+
+  name                         = "default"
+  application_load_balancer_id = azurerm_application_load_balancer.default[0].id
+}
+
+resource "azurerm_application_load_balancer_subnet_association" "default" {
+  count = var.application_load_balancer_enabled ? 1 : 0
+
+  name                         = "default"
+  application_load_balancer_id = azurerm_application_load_balancer.default[0].id
+  subnet_id                    = azurerm_subnet.alb[0].id
+}
+
 # The add-on only grants its identity roles on the node resource group.
+resource "azurerm_role_assignment" "alb_configuration_manager" {
+  count = var.application_load_balancer_enabled ? 1 : 0
+
+  scope                = azurerm_application_load_balancer.default[0].id
+  role_definition_name = "AppGw for Containers Configuration Manager"
+  principal_id         = module.cluster.ingress_profile_application_load_balancer_identity.objectId
+  principal_type       = "ServicePrincipal"
+}
+
 resource "azurerm_role_assignment" "alb_subnet_join" {
   count = var.application_load_balancer_enabled ? 1 : 0
 

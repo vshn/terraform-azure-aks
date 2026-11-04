@@ -78,8 +78,8 @@ variable "lock_kind" {
 
 variable "oidc_issuer_enabled" {
   type        = bool
-  description = "Enable or Disable the OIDC issuer URL. Defaults to false."
-  default     = false
+  description = "Enable or Disable the OIDC issuer URL. Required by `application_load_balancer_enabled`."
+  default     = true
 }
 
 variable "enable_auto_scaling" {
@@ -312,9 +312,9 @@ variable "upgrade_settings" {
 }
 
 variable "workload_identity_enabled" {
-  description = "Enable or Disable Workload Identity"
+  description = "Enable or Disable Workload Identity. Required by `application_load_balancer_enabled`."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "ingress_profile" {
@@ -340,9 +340,9 @@ variable "enable_telemetry" {
 }
 
 variable "application_load_balancer_enabled" {
-  description = "Enable the Application Gateway for Containers ALB Controller add-on"
+  description = "Enable Application Gateway for Containers: the ALB Controller add-on, a delegated subnet and a default Application Gateway for Containers with one frontend"
   type        = bool
-  default     = false
+  default     = true
   nullable    = false
 
   validation {
@@ -363,7 +363,7 @@ variable "alb_subnet_name" {
 }
 
 variable "alb_subnet_address_prefixes" {
-  description = "Address prefixes of the subnet delegated to Application Gateway for Containers. Each `ApplicationLoadBalancer` needs 256 addresses, e.g. use a /22 for up to four. Required when `application_load_balancer_enabled` is true"
+  description = "Address prefixes of the subnet delegated to Application Gateway for Containers. The default Application Gateway for Containers and each additional `ApplicationLoadBalancer` need 256 addresses each, e.g. use a /22 for up to three additional ones. Required when `application_load_balancer_enabled` is true"
   type        = list(string)
   default     = []
   nullable    = false
