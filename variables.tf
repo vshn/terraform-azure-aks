@@ -245,7 +245,7 @@ variable "maintenance_window" {
       name = "default"
       maintenance_window = {
         duration_hours = 4
-        start_time     = "22:00"
+        start_time     = "23:00"
         start_date     = "2026-10-01"
         utc_offset     = "+01:00"
         schedule = {
@@ -260,7 +260,7 @@ variable "maintenance_window" {
       name = "aksManagedAutoUpgradeSchedule"
       maintenance_window = {
         duration_hours = 4
-        start_time     = "22:00"
+        start_time     = "23:00"
         start_date     = "2026-10-01"
         utc_offset     = "+01:00"
         schedule = {
@@ -275,7 +275,7 @@ variable "maintenance_window" {
       name = "aksManagedNodeOSUpgradeSchedule"
       maintenance_window = {
         duration_hours = 4
-        start_time     = "22:00"
+        start_time     = "23:00"
         start_date     = "2026-10-01"
         utc_offset     = "+01:00"
         schedule = {
