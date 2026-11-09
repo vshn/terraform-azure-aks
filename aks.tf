@@ -8,7 +8,7 @@ module "cluster" {
   parent_id                = local.resource_group_id
   location                 = var.resource_group.location
   enable_rbac              = var.role_based_access_control_enabled
-  ingress_profile          = var.ingress_profile
+  ingress_profile          = local.ingress_profile
   kubernetes_version       = var.kubernetes_version
   dns_prefix               = var.dns_prefix
   maintenanceconfiguration = var.maintenance_window
@@ -94,4 +94,68 @@ module "cluster" {
   lock = var.lock_kind == null ? null : {
     kind = var.lock_kind
   }
+}
+
+# Application Gateway for Containers (AGC). The ALB Controller add-on is enabled via local.ingress_profile.
+# The default AGC and its frontend are managed here, so its FQDN survives removal of Gateway resources.
+# Further AGCs can be created in managed mode via `ApplicationLoadBalancer` resources using the same subnet.
+
+resource "azurerm_subnet" "alb" {
+  count = var.application_load_balancer_enabled ? 1 : 0
+
+  name                 = var.alb_subnet_name
+  resource_group_name  = var.resource_group.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = var.alb_subnet_address_prefixes
+
+  delegation {
+    name = "trafficControllers"
+
+    service_delegation {
+      name    = "Microsoft.ServiceNetworking/trafficControllers"
+      actions = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
+    }
+  }
+}
+
+resource "azurerm_application_load_balancer" "default" {
+  count = var.application_load_balancer_enabled ? 1 : 0
+
+  name                = "${var.cluster_name}-alb"
+  resource_group_name = var.resource_group.name
+  location            = var.resource_group.location
+}
+
+resource "azurerm_application_load_balancer_frontend" "default" {
+  count = var.application_load_balancer_enabled ? 1 : 0
+
+  name                         = "default"
+  application_load_balancer_id = azurerm_application_load_balancer.default[0].id
+}
+
+resource "azurerm_application_load_balancer_subnet_association" "default" {
+  count = var.application_load_balancer_enabled ? 1 : 0
+
+  name                         = "default"
+  application_load_balancer_id = azurerm_application_load_balancer.default[0].id
+  subnet_id                    = azurerm_subnet.alb[0].id
+}
+
+# The add-on only grants its identity roles on the node resource group.
+resource "azurerm_role_assignment" "alb_configuration_manager" {
+  count = var.application_load_balancer_enabled ? 1 : 0
+
+  scope                = azurerm_application_load_balancer.default[0].id
+  role_definition_name = "AppGw for Containers Configuration Manager"
+  principal_id         = module.cluster.ingress_profile_application_load_balancer_identity.objectId
+  principal_type       = "ServicePrincipal"
+}
+
+resource "azurerm_role_assignment" "alb_subnet_join" {
+  count = var.application_load_balancer_enabled ? 1 : 0
+
+  scope                = azurerm_subnet.alb[0].id
+  role_definition_name = "Network Contributor"
+  principal_id         = module.cluster.ingress_profile_application_load_balancer_identity.objectId
+  principal_type       = "ServicePrincipal"
 }
