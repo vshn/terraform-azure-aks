@@ -38,7 +38,7 @@ module "cluster" {
 - role assignments for the add-on identity on the default Application Gateway for Containers and the subnet
 
 It requires `oidc_issuer_enabled`, `workload_identity_enabled` (both default `true`) and the `azure` network plugin.
-The `ManagedGatewayAPIPreview` and `ApplicationLoadBalancerPreview` features and the `Microsoft.ServiceNetworking` provider must be registered on the subscription.
+Enabling the OIDC issuer and workload identity can't be undone.
 
 ```hcl
 module "cluster" {
@@ -47,16 +47,48 @@ module "cluster" {
 }
 ```
 
+To keep an existing cluster unchanged, set `application_load_balancer_enabled`, `oidc_issuer_enabled` and `workload_identity_enabled` to `false`, or `true` for the latter two if they're already enabled.
+
+### Prerequisites
+
+These are needed once per subscription and cluster before the first apply with `application_load_balancer_enabled`, otherwise the apply fails part way through.
+
+1. Register the preview features and resource providers on the subscription.
+   The features aren't listed under "Preview features" in the Azure portal, use the Azure CLI:
+
+   ```bash
+   az feature register --namespace Microsoft.ContainerService --name ManagedGatewayAPIPreview
+   az feature register --namespace Microsoft.ContainerService --name ApplicationLoadBalancerPreview
+
+   # Repeat until both are "Registered", this can take 15 minutes
+   az feature show --namespace Microsoft.ContainerService --name ManagedGatewayAPIPreview --query properties.state -o tsv
+   az feature show --namespace Microsoft.ContainerService --name ApplicationLoadBalancerPreview --query properties.state -o tsv
+
+   az provider register --namespace Microsoft.ContainerService # propagates the features
+   az provider register --namespace Microsoft.ServiceNetworking
+   az provider register --namespace Microsoft.NetworkFunction
+   ```
+
+   Missing registrations fail with `MissingSubscriptionRegistration`.
+
+2. Allow the identity running Terraform to create the role assignments for the ALB Controller identity.
+   `Contributor` isn't sufficient, the apply then fails with `AuthorizationFailed` on `Microsoft.Authorization/roleAssignments/write`.
+   Someone with `Owner` or `User Access Administrator` on the cluster's resource group assigns the identity **Role Based Access Control Administrator** on that resource group, constrained to the roles **AppGw for Containers Configuration Manager** and **Network Contributor**.
+
+   In the Azure portal: resource group → *Access control (IAM)* → *Add role assignment* → *Privileged administrator roles* → *Role Based Access Control Administrator* → select the identity under *Members* → under *Conditions* choose *Allow user to only assign selected roles to selected principals*, *Constrain roles* and select both roles.
+   Don't constrain the principals, the ALB Controller identity is only created by the apply.
+   Role assignments can take a few minutes to take effect.
+
 ### Default Gateway
 
-Create a shared `Gateway` on the default frontend using the `default_alb` output; applications attach their `HTTPRoute`s to it:
+The [azure-application-gateway-for-containers](https://github.com/projectsyn/component-azure-application-gateway-for-containers) Commodore component deploys a shared `Gateway` on the default frontend. Applications attach their `HTTPRoute`s to it. The resulting `Gateway`:
 
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: default
-  namespace: alb-system
+  namespace: syn-alb
   annotations:
     alb.networking.azure.io/alb-id: <default_alb.id>
 spec:
